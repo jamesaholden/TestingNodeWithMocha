@@ -1,21 +1,21 @@
 function AuthController() {
 
     var roles;
-    //var user;
+    var user;
+    
     function setRoles(role) {
         roles = role;
-        //user.roles = role;
+        user.roles = role;
     }
 
-    // function setUser(inUser) {
-    //     user = inUser;
-    // }
+    function setUser(inUser) {
+        user = inUser;
+    }
 
     function isAuthorized(neededRole) {
-        //if (user) {
-        //    return user.isAuthorized(neededRole);
-        //}
-        return roles.indexOf(neededRole) >= 0;
+        if (user) {
+           return user.isAuthorized(neededRole);
+        }
     }
 
     function isAuthorizedAsync(neededRole, cb) {
@@ -33,15 +33,14 @@ function AuthController() {
     }
 
     function getIndex(req, res) {
-        // try {
-        //     if (req.user.isAuthorized('admin')) {
-        //         return res.render('index');
-        //     }
-        //     res.render('notAuth');
-        // } catch (e) {
-        //     res.render('error');
-        // }
-        res.render('index');
+        try {
+            if (req.user.isAuthorized('admin')) {
+                return res.render('index');
+            } 
+            res.render('notAuth');            
+        } catch(e) {
+            res.render('error');
+        }
     }
 
     return {
@@ -49,7 +48,8 @@ function AuthController() {
         isAuthorizedAsync,
         setRoles,
         isAuthorizedPromise,
-        getIndex //, setUser
+        getIndex,
+        setUser
     };
 }
 
