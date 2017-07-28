@@ -78,7 +78,7 @@ describe('AuthController', function () {
             var res = {
                 render: sinon.spy()
             };
-
+            
             authController.getIndex(req, res);
             //console.log(res.render);
             res.render.calledOnce.should.be.true;
