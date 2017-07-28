@@ -9,7 +9,7 @@ var sinon = require('sinon');
 chai.use(chaiAsPromised);
 chai.should();
 
-describe('AuthController', function() {
+describe('AuthController', function () {
 
     // either name your beforeEach functions...
     beforeEach(function settingUpRoles() {
@@ -29,11 +29,11 @@ describe('AuthController', function() {
     // if conditional logic (often based on environment) in test, use this.skip() to skip 
     // test under those conditions
 
-//  describe('isAuthorized', function () {
-//      beforeEach(function settingUpRoles() {
-//         console.log('running before each');
-//         authController.setRoles(['user']);
-//     });
+    //  describe('isAuthorized', function () {
+    //      beforeEach(function settingUpRoles() {
+    //         console.log('running before each');
+    //         authController.setRoles(['user']);
+    //     });
 
     describe('isAuthorized', function () {
 
@@ -49,6 +49,7 @@ describe('AuthController', function() {
         it('should not allow a get if not authorized');
         it('should allow get if authorized');
     });
+
     describe('isAuthorizedAsync', function () {
 
         it('Should return false if not authorized', function (done) {
@@ -59,50 +60,52 @@ describe('AuthController', function() {
                 });
 
         });
-        
+
     });
-     describe('isAuthorizedPromise', function () {
+
+    describe('isAuthorizedPromise', function () {
 
         it('Should return false if not authorized', function () {
-           return authController.isAuthorizedPromise('admin').should.eventually.be.false;
+            return authController.isAuthorizedPromise('admin').should.eventually.be.false;
 
         });
-        
+
     });
 
-
     describe('getIndex', function () {
-        it('should render index', function() {
+        it('should render index', function () {
             var req = {};
             var res = {
                 render: sinon.spy()
             };
 
             authController.getIndex(req, res);
+            //console.log(res.render);
             res.render.calledOnce.should.be.true;
+            res.render.firstCall.args[0].should.equal('index');  // inspect sinon results
         });
     });
-        // var user = {};
-        // beforeEach(function () {
-        //      user = {
-        //         roles: ['user'],
-        //         isAuthorized: function (neededRole) {
-        //            return this.roles.indexOf(neededRole) >= 0;
-        //         }
-        //     };
-        // });
-        // it('should render index if authorized', function () {
-        //     var isAuth = sinon.stub(user, 'isAuthorized').returns(true);
-        //     var req = {user: user};
-        //     var res = {
-        //         render: function(){}
-        //     };
-        //     var mock = sinon.mock(res);
-        //     mock.expects('render').once().withExactArgs('index');
+    // var user = {};
+    // beforeEach(function () {
+    //      user = {
+    //         roles: ['user'],
+    //         isAuthorized: function (neededRole) {
+    //            return this.roles.indexOf(neededRole) >= 0;
+    //         }
+    //     };
+    // });
+    // it('should render index if authorized', function () {
+    //     var isAuth = sinon.stub(user, 'isAuthorized').returns(true);
+    //     var req = {user: user};
+    //     var res = {
+    //         render: function(){}
+    //     };
+    //     var mock = sinon.mock(res);
+    //     mock.expects('render').once().withExactArgs('index');
 
-        //     authController.getIndex(req, res);
-        //     isAuth.calledOnce.should.be.true;
+    //     authController.getIndex(req, res);
+    //     isAuth.calledOnce.should.be.true;
 
-        //     mock.verify();
-        // });
+    //     mock.verify();
+    // });
 });
